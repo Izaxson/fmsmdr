@@ -1,0 +1,108 @@
+{% load static %}
+
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
+  <ul class="nav">
+    <li class="nav-item nav-profile">
+      <div class="nav-link">
+        <div class="profile-image">
+        
+        </div>
+        <div class="profile-name">
+          <p class="name">
+            {% comment %} <img src="{{ profile.get_photo_url }}" class="img-responsive thumbnail " alt="img"> {% endcomment %}
+          {% comment %} <a href="{% url 'profile' %}"><img src="{{ user.profile.profile_pic.url }}" class="img-lg rounded-circle mb-2" alt="profile image"></a>  {% endcomment %}
+           
+          </p>
+         <b> {{ request.user.first_name|title}}  {{ request.user.last_name|title}}</b>
+        </div>
+      </div>
+    </li>
+    {% if user.is_authenticated %}
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'dashboard' %}">
+          <i class="fa fa-home menu-icon"></i>
+          
+          <span class="menu-title">Dashboard</span>
+        </a>
+      </li>
+    {% endif %}
+
+    {% if user.is_authenticated %}
+     {% if profile.is_admin %} 
+    <li class="nav-item">
+      <a class="nav-link"  href="{% url 'received' %}" aria-expanded="false" aria-controls="page-layouts">
+        <i class="fas fa-inbox menu-icon"></i><br>
+        <span class="menu-title">  Received</span>
+        <i class="menu-arrow"></i>
+      </a>
+      
+    </li>
+     {% endif %}
+    {% endif %}
+
+  {% if user.is_authenticated %}
+    {% if profile.is_clerk or profile.is_admin %} 
+  <li class="nav-item">
+      <a class="nav-link"  href="{% url 'mycaptures' %}" aria-expanded="false" aria-controls="page-layouts">
+        <i class="fas fa-calendar menu-icon"></i>
+        <span class="menu-title">My Captures</span>
+        <i class="menu-arrow"></i>
+      </a>
+      
+    </li> 
+    {% endif %}
+    {% endif %}
+
+    {% if user.is_authenticated %}
+     {% if profile.is_clerk %}
+    <li class="nav-item">
+      <a class="nav-link"  href="{% url 'sent' %}" aria-expanded="false" aria-controls="general-pages">
+        <i class="fas fa-paper-plane menu-icon"></i><br>
+        <span class="menu-title"> Sent </span>
+        <i class="menu-arrow"></i>
+      </a>
+      
+    </li>
+     {% endif %}
+    {% endif %}
+ {% comment %} <li class="nav-item">
+      <a class="nav-link"  href="{% url 'addsent' %}" aria-expanded="false" aria-controls="general-pages">
+        <i class="fas fa-upload menu-icon"></i>
+        <span class="menu-title">Upload Sent </span>
+        <i class="menu-arrow"></i>
+      </a>
+      
+    </li>  {% endcomment %}
+    <li class="nav-item">
+      <a class="nav-link"  href="{% url 'sentsearch' %}" aria-expanded="false" aria-controls="general-pages">
+        <i class="fas fa-search menu-icon"></i>
+        <span class="menu-title" "disabled" >Search Sent </span>
+        <i class="menu-arrow"></i>
+      </a>
+      
+    </li> 
+
+    <li class="nav-item">
+      <a class="nav-link"  href="{% url 'receivedsearch' %}" aria-expanded="false" aria-controls="general-pages">
+        <i class="fas fa-search menu-icon"></i>
+        <span class="menu-title" "disabled" >Search Received </span>
+        <i class="menu-arrow"></i>
+      </a>
+      
+    </li> 
+ 
+  </ul>
+</nav>
+
+<script src="{% static 'vendors/js/vendor.bundle.base.js' %}"></script>
+<script src="{% static 'vendors/js/vendor.bundle.addons.js' %}"></script>
+<!-- endinject -->
+<!-- Plugin js for this page-->
+<!-- End plugin js for this page-->
+<!-- inject:js -->
+<script src="{% static 'js/off-canvas.js' %}"></script>
+<script src="{% static 'js/hoverable-collapse.js' %}"></script>
+<script src="{% static 'js/misc.js' %}"></script>
+<script src="{% static 'js/settings.js' %}"></script>
+<script src="{% static 'js/todolist.js' %}"></script>
+
