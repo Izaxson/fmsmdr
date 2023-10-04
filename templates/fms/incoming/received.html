@@ -38,14 +38,14 @@
   
       </div>
       {% endif %}
-      {% if user.is_authenticated %}
-        {% if user.is_clerk or user.is_superadmin %}
+   
+        {% comment %} {% if user.is_clerk or user.is_superadmin %} {% endcomment %}
         <button><a class="nav-link" "float-right" href="{% url 'addreceived' %}">
           <span class="btn btn-success"> Upload New </span>
            </a>
         </button>
-        {% endif %}
-    {% endif %}
+        {% comment %} {% endif %} {% endcomment %}
+   
     <br><br>
       <div class="row">
         <div class="col-12">
@@ -61,9 +61,9 @@
                   <th>Date Received</th>
                   
                   <th>Office To</th>
-                  {% if user.is_authenticated and user.is_clerk %}
+                 
                   <th>Edit/Delete</th>
-                  {% endif %}
+             
                   <th>View</th>
                   <th>Download</th>
                 </tr>
@@ -78,14 +78,12 @@
                   <td>{{received.date_received|date:"d-m-Y"}}</td>
                   
                   <td>{{received.office_to}}</td>
-                  {% if user.is_authenticated %}
-                    {% if user.is_clerk or user.is_admin %}
+                 
                     <td>
                       <a href="{% url 'edit-received' received.id %}"><button class="btn btn-light"><i class="fa fa-edit text-primary"></i>
                       </button>
                     </td>
-                    {% endif %}
-                {% endif %}
+              
                   <td>
                     <a href="{% url 'view-file' received.id %}">  <button class="btn btn-light"><i class="fa fa-eye text-primary"></i>
                     </button>

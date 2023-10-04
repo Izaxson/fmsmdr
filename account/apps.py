@@ -4,7 +4,7 @@
     
 # class ProfileConfig(AppConfig):
 #     default_auto_field = 'django.db.models.BigAutoField'
-#     name = 'fms'
+#     name = 'account'
     
 #     def ready(self):
-#         import fms.signals    
+#         import account.signals    

@@ -2,8 +2,7 @@ from django.urls import path
 from fms import views
 urlpatterns = [
 
-   # path('view-pdf/<str:filename>/', views.PDFView.as_view(), name='pdf'),
-    #received
+
    #password change
    # path('password_change/', views.CustomPasswordChangeView.as_view(), name='profile'),
    # path('password_change_done/', 'password_change_done', name='password_change_done'),

@@ -88,9 +88,9 @@ class DashboardView(CustomLoginRequiredMixin,TemplateView):
         except Exception as e:
             # Handle any exceptions gracefully
             context['incoming_count'] = "loading...."
-            context['sent_count'] = "loading...."
-            context['total_count'] = "loading...."
-            context['users_count'] = "loading...."
+            context['sent_count'] = "...."
+            context['total_count'] = "...."
+            context['users_count'] = "...."
         
         return context
     
@@ -121,15 +121,15 @@ class ProfileView(CustomLoginRequiredMixin,TemplateView):
             context['percent_sent'] = percent_sent
         except Exception as e:
             # Handle any exceptions gracefully
-            context['received_count'] = "loading...."
-            context['sent_count'] = "loading...."
-            context['total_count'] = "loading...."
-            context['users_count'] = "loading...."
+            context['received_count'] = "...."
+            context['sent_count'] = "...."
+            context['total_count'] = "...."
+            context['users_count'] = "...."
         
         return context
 
 class MyCapturesView(CustomLoginRequiredMixin,FilterView):
-    template_name = 'fms/incoming/received.html'
+    template_name = 'fms/incoming/mycaptures.html'
     model = Received
     context_object_name = 'received'
     filterset_class = ReceivedFilter
@@ -137,7 +137,7 @@ class MyCapturesView(CustomLoginRequiredMixin,FilterView):
     
     def get_queryset(self):
         queryset = super().get_queryset()
-        queryset = queryset.filter(profile=self.request.user.profile)
+        queryset = queryset.filter(uploaded_by=self.request.user.profile)
 
         search_query = self.request.GET.get('q')
         if search_query:
@@ -198,9 +198,9 @@ class ReceivedAddView(CustomLoginRequiredMixin,FormView):
     success_url = reverse_lazy('received')
     
     def form_valid(self, form):
-        profile = self.request.user.profile  # attaching user to captured  bby 
+        uploaded_by = self.request.user.profile  # attaching user to captured  bby 
         form = form.save(commit=False)
-        form.profile = profile
+        form.uploaded_by = uploaded_by
         form.save()
         
 
@@ -284,7 +284,7 @@ class SearchSentListView(CustomLoginRequiredMixin,FilterView):
 class SentAddView(CustomLoginRequiredMixin,FormView):
     template_name = 'fms/outgoing/addsent.html'
     form_class=SentForm
-    success_url = reverse_lazy('sent')
+    success_url = reverse_lazy('addsent')
 
     def form_valid(self, form):
         profile = self.request.user.profile  # attaching user to captured  bby 

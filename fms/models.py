@@ -12,17 +12,13 @@ class OTPVerification(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')   
     phone_number = models.CharField(max_length=15, unique=True)  
-    is_clerk=models.BooleanField(default=True)
-    is_governor=models.BooleanField(default=False)
-    is_deputy=models.BooleanField(default=False)
-    is_admin=models.BooleanField(default=False)
-    # profile_pic = models.ImageField(
-    #     upload_to='profiles/',
-    #     null=True,
-    #     blank=True,
-    #     validators=[FileExtensionValidator(['jpeg', 'jpg', 'gif', 'png'])]
+    profile_pic = models.ImageField(
+        upload_to='profiles/',
+        null=True,
+        blank=True,
+        validators=[FileExtensionValidator(['jpeg', 'jpg', 'gif', 'png'])]
         
-    # ) 
+    ) 
           
     @property
     def get_photo_url(self):
@@ -35,25 +31,25 @@ class Profile(models.Model):
         return f'{self.user.username} Profile'
     
     
-    # def save(self, *args, **kwargs):
-    #     # save the profile first
-    #     super().save(*args, **kwargs)
+    def save(self, *args, **kwargs):
+        # save the profile first
+        super().save(*args, **kwargs)
 
-    #     # resize the image
-    #     img = Image.open(self.profile_pic.path)
-    #     if img.height > 400 or img.width > 400:
-    #         output_size = (400, 400)
-    #         # create a thumbnail
-    #         img.thumbnail(output_size)
-    #         # overwrite the larger image
+        # resize the image
+        img = Image.open(self.profile_pic.path)
+        if img.height > 400 or img.width > 400:
+            output_size = (400, 400)
+            # create a thumbnail
+            img.thumbnail(output_size)    
+            # overwrite the larger image
     
-    #         img.save(self.profile_pic.path)
+            img.save(self.profile_pic.path)
     
 
 
 class Received(models.Model):
     OFFICE_TO = (
-        ('Office of The Governorr', 'Office of The Governor'),
+        ('Office of The Governor', 'Office of The Governor'),
         ('Office of The Deputy Governor', 'Office of The Deputy Governor')
     )
 
@@ -75,7 +71,7 @@ class Received(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     file = models.FileField(upload_to='files/Received/%Y/%m/%d/', validators=[FileExtensionValidator(['pdf'])])
     remarks = models.TextField(max_length=100, null=True, blank=True)
-    profile = models.ForeignKey(Profile, on_delete=models.PROTECT)
+    uploaded_by = models.ForeignKey(Profile, on_delete=models.PROTECT)
     class Meta:
         ordering = ['-date_received']
         verbose_name = 'Received'
@@ -108,7 +104,7 @@ class Sent(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     file = models.FileField(upload_to='files/Sent/%Y/%m/%d/', validators=[FileExtensionValidator(['pdf'])])
     remarks = models.TextField(max_length=100,null=True,blank=True)
-    profile = models.ForeignKey(Profile, on_delete=models.PROTECT)
+    uploaded_by = models.ForeignKey(Profile, on_delete=models.PROTECT)
 
     class Meta:
         ordering=['-date_sent']

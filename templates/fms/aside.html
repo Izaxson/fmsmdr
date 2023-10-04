@@ -9,9 +9,10 @@
         </div>
         <div class="profile-name">
           <p class="name">
-            {% comment %} <img src="{{ profile.get_photo_url }}" class="img-responsive thumbnail " alt="img"> {% endcomment %}
-          {% comment %} <a href="{% url 'profile' %}"><img src="{{ user.profile.profile_pic.url }}" class="img-lg rounded-circle mb-2" alt="profile image"></a>  {% endcomment %}
-           
+            <img src="{% static 'images/logo.png' %}" class="img-responsive thumbnail" alt="img" style="width: 100px; height: 100px;">
+
+            {% comment %} <img src="{% static 'images/logo.png'%}" alt="banner" /> {% endcomment %}
+         {% comment %} <a href="{% url 'profile' %}"><img src="{{ user.profile_pic.url }}" class="img-lg rounded-circle mb-2" alt="profile image"></a>   {% endcomment %}
           </p>
          <b> {{ request.user.first_name|title}}  {{ request.user.last_name|title}}</b>
         </div>
@@ -27,8 +28,8 @@
       </li>
     {% endif %}
 
-    {% if user.is_authenticated %}
-     {% if profile.is_admin %} 
+   {% if user.is_authenticated %}
+     {% comment %} {% if user.profile.is_clerk %}   {% endcomment %}
     <li class="nav-item">
       <a class="nav-link"  href="{% url 'received' %}" aria-expanded="false" aria-controls="page-layouts">
         <i class="fas fa-inbox menu-icon"></i><br>
@@ -36,12 +37,12 @@
         <i class="menu-arrow"></i>
       </a>
       
-    </li>
-     {% endif %}
-    {% endif %}
+     </li>
+     {% comment %} {% endif %}  {% endcomment %}
+   {% endif %} 
 
-  {% if user.is_authenticated %}
-    {% if profile.is_clerk or profile.is_admin %} 
+
+    {% comment %} {% if profile.is_clerk or profile.is_admin %}  {% endcomment %} 
   <li class="nav-item">
       <a class="nav-link"  href="{% url 'mycaptures' %}" aria-expanded="false" aria-controls="page-layouts">
         <i class="fas fa-calendar menu-icon"></i>
@@ -50,11 +51,11 @@
       </a>
       
     </li> 
-    {% endif %}
-    {% endif %}
+   
+  
 
-    {% if user.is_authenticated %}
-     {% if profile.is_clerk %}
+ {% if user.is_authenticated %}
+     
     <li class="nav-item">
       <a class="nav-link"  href="{% url 'sent' %}" aria-expanded="false" aria-controls="general-pages">
         <i class="fas fa-paper-plane menu-icon"></i><br>
@@ -63,16 +64,9 @@
       </a>
       
     </li>
-     {% endif %}
-    {% endif %}
- {% comment %} <li class="nav-item">
-      <a class="nav-link"  href="{% url 'addsent' %}" aria-expanded="false" aria-controls="general-pages">
-        <i class="fas fa-upload menu-icon"></i>
-        <span class="menu-title">Upload Sent </span>
-        <i class="menu-arrow"></i>
-      </a>
-      
-    </li>  {% endcomment %}
+   
+    {% endif %} 
+
     <li class="nav-item">
       <a class="nav-link"  href="{% url 'sentsearch' %}" aria-expanded="false" aria-controls="general-pages">
         <i class="fas fa-search menu-icon"></i>
